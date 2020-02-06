@@ -1,0 +1,8 @@
+type Query {
+  searchLocationOnFilter(
+    artist: [String!]
+    kind: [String!]
+    keyword: [String!]
+    postType: [Int!]
+  ): [Kind!]
+}

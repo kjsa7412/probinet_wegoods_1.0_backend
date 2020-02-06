@@ -1,0 +1,3 @@
+type Query {
+  seeOnePost(id: String!): Post!
+}

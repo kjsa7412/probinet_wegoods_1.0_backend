@@ -1,0 +1,8 @@
+type Mutation {
+  addQuiz(
+    title: String!
+    question: String!
+    answers: [String!]!
+    rightAnswer: Int
+  ): Quiz!
+}

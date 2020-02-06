@@ -1,0 +1,16 @@
+enum CONDITIONS {
+  MY
+  SELL
+  WANT
+}
+
+enum ACTIONS {
+  ARTIST
+  KIND
+  KEYWORD
+  LOCATION
+  QUIZ
+}
+type Query {
+  seeRecentFilterItem(condition: CONDITIONS!, action: ACTIONS!): [FilterItem!]
+}

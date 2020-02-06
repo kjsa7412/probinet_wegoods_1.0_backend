@@ -1,0 +1,3 @@
+type Query {
+  searchArtist(term: String!): [Artist!]
+}

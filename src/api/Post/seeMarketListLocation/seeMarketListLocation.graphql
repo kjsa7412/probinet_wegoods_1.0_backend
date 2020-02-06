@@ -1,0 +1,7 @@
+type Query {
+  seeMarketListLocation(
+    loadNumber: Int
+    postsId: [String!]
+    location: String
+  ): [Post!]!
+}

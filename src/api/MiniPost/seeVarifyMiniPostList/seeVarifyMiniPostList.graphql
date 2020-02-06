@@ -1,0 +1,3 @@
+type Query {
+  seeVarifyMiniPostList(postId: String!): [MiniPost!]!
+}

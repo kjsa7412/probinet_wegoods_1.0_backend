@@ -1,0 +1,8 @@
+type Mutation {
+  editPopupSet(
+    id: String!
+    lifePop: Boolean
+    filterPop: Boolean
+    importantPop: Boolean
+  ): PopupSet!
+}

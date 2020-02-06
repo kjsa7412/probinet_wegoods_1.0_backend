@@ -1,0 +1,3 @@
+type Query {
+  searchLifePost(term: String!): [LifePost!]!
+}

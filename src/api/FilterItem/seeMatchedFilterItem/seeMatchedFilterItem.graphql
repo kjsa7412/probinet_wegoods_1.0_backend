@@ -1,0 +1,16 @@
+enum ACTIONS {
+  ARTIST
+  KIND
+  LOCATION
+  POSTTYPE
+}
+
+type Query {
+  seeMatchedFilterItem(
+    artistList: [String!]
+    kindList: [String!]
+    locationList: [String!]
+    postTypeList: [Int!]
+    action: ACTIONS!
+  ): [FilterItem!]
+}

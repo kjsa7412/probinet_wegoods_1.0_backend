@@ -1,0 +1,16 @@
+type Mutation {
+  addPost(
+    files: [String!]!
+    title: String!
+    postFilter: String
+    wantFilter: String
+    postQuiz: [String!]!
+    miniPostsForVarify: [String!]!
+    price: Int
+    description: String
+    varifyDesc: String
+    deliveryPrice: Int
+    coord: String
+    address: String
+  ): Post!
+}

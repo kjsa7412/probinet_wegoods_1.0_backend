@@ -1,0 +1,15 @@
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
+type Mutation {
+  editQuiz(
+    id: String!
+    title: String!
+    question: String!
+    answers: [String!]!
+    rightAnswer: Int
+    action: ACTIONS!
+  ): Quiz!
+}

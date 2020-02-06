@@ -1,0 +1,15 @@
+enum ACTIONS {
+  EDIT
+  OUT
+}
+
+type Mutation {
+  editRoom(
+    roomId: String!
+    title: String
+    file: String
+    owner: String
+    notice: String
+    action: ACTIONS!
+  ): Room!
+}

@@ -1,0 +1,16 @@
+enum FilterAction {
+  POST_FILTER
+  WANT_FILTER
+}
+
+type Mutation {
+  addFilter(
+    artist: [String!]
+    postType: [Int!]
+    keyword: [String!]
+    kind: [String!]
+    location: [String!]
+    postId: String
+    action: FilterAction!
+  ): Filter!
+}

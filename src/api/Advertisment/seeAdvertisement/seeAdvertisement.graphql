@@ -1,0 +1,3 @@
+type Query {
+  seeAdvertisement(loadNumber: Int): [Advertisement!]!
+}

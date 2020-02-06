@@ -1,0 +1,13 @@
+type Mutation {
+  addMyFilter(
+    title: String!
+    file: String
+    filter: String
+    artist: [String!]
+    postType: [Int!]
+    keyword: [String!]
+    kind: [String!]
+    location: [String!]
+    alarmSet: Boolean
+  ): MyFilter!
+}

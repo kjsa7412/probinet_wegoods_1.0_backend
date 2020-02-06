@@ -1,0 +1,3 @@
+type Query {
+  seeRegistMiniPostList(postId: String!): [MiniPost!]!
+}

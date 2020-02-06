@@ -1,0 +1,8 @@
+enum KIND {
+  POST
+  LIFEPOST
+}
+
+type Query {
+  seeLikeFromPost(postId: String, lifePostId: String): [Like!]
+}

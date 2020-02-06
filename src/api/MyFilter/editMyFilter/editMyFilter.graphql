@@ -1,0 +1,10 @@
+type Mutation {
+  editMyFilter(
+    id: String!
+    title: String
+    file: String
+    filter: String
+    alarmSet: Boolean
+    action: ACTIONS!
+  ): MyFilter!
+}

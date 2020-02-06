@@ -1,0 +1,337 @@
+type User {
+  id: ID! @id
+  loginSecret: String
+  phoneNumber: String
+  email: String! @unique
+  password: String!
+  username: String! @unique
+  avatar: String
+  bio: String
+  following: [User!]! @relation(name: "FollowRelation")
+  followers: [User!]! @relation(name: "FollowRelation")
+  posts: [Post!]! @relation(name: "PostsByUser" onDelete: CASCADE)
+  lifePosts: [LifePost!]! @relation(name: "LifePostsByUser" onDelete: CASCADE)
+  inPosts: [Post!]! @relation(name: "InPostParticipants")
+  rooms: [Room!]! @relation(name: "RoomsParticipants")
+  roomsOwner: [Room!]! @relation(name: "RoomsOwnerRelation")
+  favorites: [Artist!]! @relation(name: "FavoritesArtist")
+  orders: [Order!]! @relation(name: "OrdersByUser")
+  myFilter: [MyFilter!]! @relation(name: "MyFilterByUser" onDelete: CASCADE)
+  likes: [Like!]! @relation(name: "LikeByUser")
+  comments: [Comment!]! @relation(name: "CommentByUser")
+  background: String
+  quizzes: [Quiz!]! @relation(name: "QuizzesByUser" onDelete: CASCADE)
+  payment: Pay @relation(link: INLINE, name: "PayByUser" onDelete: CASCADE)
+  alarms: [Alarm!]! @relation(name: "SendAlarm")
+  alarmsFromUser: [Alarm!]! @relation(name: "AlarmsByUser" onDelete: CASCADE)
+  popupSet: PopupSet @relation(link: INLINE, name: "PopupSetByUser" onDelete: CASCADE)
+  miniPosts: [MiniPost!]! @relation(name: "MiniPostsByUser")
+  varifyedPosts: [Post!]! @relation(name: "VarifyedUserByPost")
+  quizPassPosts: [Post!]! @relation(name: "QuizPassUserByPost")
+  reportedPosts: [Post!]! @relation(name: "ReportedUserByPost")
+  reportedLifePosts: [LifePost!]! @relation(name: "ReportedUserByLifePost")
+  reportedRooms: [Room!]! @relation(name: "ReportedUserByRoom")
+  receiveReports: [Report!]! @relation(name: "ReportByUserProfile" onDelete: CASCADE)
+  sendReports: [Report!]! @relation(name: "SendReportsByUser" onDelete: CASCADE)
+  creator: Creator @relation(link: INLINE, name: "CreatorByUser")
+  valid: Boolean @default(value: true)
+  registedArtist: [Artist!]! @relation(name: "RegistedArtistByUser")
+  advertisement: Advertisement @relation(link: INLINE, name: "AdByUser")
+  myLocation: Location @relation(link: INLINE, name: "LocationByUser")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Post {
+  id: ID! @id
+  user: User! @relation(name: "PostsByUser")
+  comments: [Comment!]! @relation(name: "CommentsByPost" onDelete: CASCADE)
+  likes: [Like!]! @relation(name: "LikeByPost" onDelete: CASCADE)
+  files: [String!]! @scalarList(strategy: RELATION)
+  title: String!
+  postFilter: Filter @relation(name: "FilterByPost" onDelete: CASCADE)
+  wantFilter: Filter @relation(name: "WantFilterByPost" onDelete: CASCADE)
+  postQuiz: [Quiz!]! @relation(name: "QuizByPost")
+  price: Int
+  description: String
+  viewCount: Int @default(value: 0)
+  orderStatus: [Order!]! @relation(name: "OrderByPost")
+  registedMiniPosts: [MiniPost!]! @relation(name: "RegistedMiniPostsByPost" onDelete: CASCADE)
+  participants: [User!]! @relation(name: "InPostParticipants")
+  varifyDesc: String
+  varifyedUser: [User!]! @relation(name: "VarifyedUserByPost")
+  quizPassUser: [User!]! @relation(name: "QuizPassUserByPost")
+  miniPostsForVarify: [MiniPost!]! @relation(name: "MiniPostsForVarifyByPost" onDelete: CASCADE)
+  deliveryPrice: Int
+  reportedUser: [User!]! @relation(name: "ReportedUserByPost")
+  reports: [Report!]! @relation(name: "ReportByPost" onDelete: CASCADE)
+  alarms: [Alarm!]! @relation(name: "AlarmsByPost" onDelete: CASCADE)
+  coord: String
+  address: String
+  status: Boolean @default(value: true)
+  valid: Boolean @default(value: true)
+  advertisement: Advertisement @relation(link: INLINE, name: "AdByPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
+  type: Int
+  numberOfParticipants: Int
+  likeCount: Int @default(value: 0)
+  tradeType: Int @default(value: 1)
+}
+
+
+type LifePost {
+  id: ID! @id
+  user: User! @relation(name: "LifePostsByUser")
+  comments: [Comment!]! @relation(name: "CommentsByLifePost" onDelete: CASCADE)
+  likes: [Like!]! @relation(name: "LikeByLifePost" onDelete: CASCADE)
+  files: [String!]! @scalarList(strategy: RELATION)
+  title: String!
+  description: String
+  viewCount: Int @default(value: 0)
+  reportedUser: [User!]! @relation(name: "ReportedUserByLifePost")
+  reports: [Report!]! @relation(name: "ReportByLifePost" onDelete: CASCADE)
+  valid: Boolean @default(value: true)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type MiniPost {
+  id: ID! @id
+  user: User @relation(name: "MiniPostsByUser")
+  registedPost: Post @relation(name: "RegistedMiniPostsByPost")
+  varifiedPost: Post @relation(name: "MiniPostsForVarifyByPost")
+  title: String
+  description: String
+  files: [String!]! @scalarList(strategy: RELATION)
+  reports: [Report!]! @relation(name: "ReportByMiniPost" onDelete: CASCADE)
+  valid: Boolean @default(value: true)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Order {
+  id: ID! @id
+  user: User! @relation(name: "OrdersByUser")
+  name: String!
+  phoneNum: String
+  product: Post @relation(name: "OrderByPost")
+  productName: String!
+  price: Int!
+  payment: String!
+  location: String!
+  recipient: String!
+  recipientPhone: String!
+  requirement: String
+  commision: Int
+  deliveryPrice: Int
+  deliveryStatus: Int!
+  deliveryDesc: String
+  oneDate: DateTime!
+  twoDate: DateTime!
+  threeDate: DateTime!
+  fourDate: DateTime!
+  fiveDate: DateTime!
+  sixDate: DateTime!
+  sevenDate: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Pay {
+  id: ID! @id
+  user: User! @relation(name: "PayByUser")
+  account: String
+}
+
+
+type Room {
+  id: ID! @id
+  participants: [User!]! @relation(name: "RoomsParticipants")
+  messages: [Message!]! @relation(name: "MessagesByRoom" onDelete: CASCADE)
+  title: String
+  subTitle: String
+  file: String
+  owner: User @relation(name: "RoomsOwnerRelation")
+  notice: String
+  reportedUser: [User!]! @relation(name: "ReportedUserByRoom")
+  likes: [Like!]! @relation(name: "LikeByRoom" onDelete: CASCADE)
+  valid: Boolean @default(value: true)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Report {
+  id: ID! @id
+  reporter: User! @relation(name: "SendReportsByUser")
+  post: Post @relation(name: "ReportByPost")
+  lifePost: LifePost @relation(name: "ReportByLifePost")
+  miniPost: MiniPost @relation(name: "ReportByMiniPost")
+  comment: Comment @relation(name: "ReportByComment")
+  userProfile: User @relation(name: "ReportByUserProfile")
+  reportType: Int
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Comment {
+  id: ID! @id
+  text: String!
+  user: User @relation(name: "CommentByUser")
+  post: Post @relation(name: "CommentsByPost" )
+  lifePost: LifePost @relation(name: "CommentsByLifePost" )
+  reports: [Report!]! @relation(name: "ReportByComment" onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type MyFilter {
+  id: ID! @id
+  title: String!
+  file: String
+  user: User! @relation(name: "MyFilterByUser")
+  filter: Filter! @relation(name: "FilterByMyFilter")
+  alarmSet: Boolean @default(value: true)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+} 
+
+
+type Message {
+  id: ID! @id
+  text: String!
+  from: User!
+  room: Room! @relation(name: "MessagesByRoom")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Kind {
+  id: ID! @id
+  num: Int
+  text: String!
+  registed: Boolean @default(value: false)
+  filters: [Filter!]! @relation(name: "KindByFilter")
+  createdAt: DateTime! @createdAt
+}
+
+
+type Keyword {
+  id: ID! @id
+  num: Int
+  text: String
+  filters: [Filter!]! @relation(name: "KeywordByFilter")
+  createdAt: DateTime! @createdAt
+}
+
+
+type Filter {
+  id: ID! @id
+  artist: [Artist!]! @relation(name: "ArtistByFilter")
+  postType: [Int!]! @scalarList(strategy: RELATION)
+  kind: [Kind!]! @relation(name: "KindByFilter")
+  keyword: [Keyword!]! @relation(name: "KeywordByFilter")
+  location: [Location!]! @relation(name: "LocationByFilter")
+  postFilter: [Post!]! @relation(name: "FilterByPost")
+  wantFilter: [Post!]! @relation(name: "WantFilterByPost")
+  userFilter: [MyFilter!]! @relation(name: "FilterByMyFilter" onDelete: CASCADE)
+  popularFilter : Boolean @default(value: false)
+  filterIndex : Int! @unique
+  createdAt: DateTime! @createdAt
+}
+
+
+type Location {
+  id: ID! @id
+  num: Int!
+  text: String!
+  filters: [Filter!]! @relation(name: "LocationByFilter")
+  users: [User!]! @relation(name: "LocationByUser")
+}
+
+
+type Like {
+  id: ID! @id
+  user: User @relation(name: "LikeByUser")
+  post: Post @relation(name: "LikeByPost")
+  lifePost: LifePost @relation(name: "LikeByLifePost")
+  room: Room @relation(name: "LikeByRoom")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Quiz {
+  id: ID! @id
+  user: User! @relation(name: "QuizzesByUser")
+  posts: [Post!]! @relation(name: "QuizByPost")
+  title: String!
+  question: String!
+  answers: [String!]! @scalarList(strategy: RELATION)
+  rightAnswer: Int
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Alarm {
+  id: ID! @id
+  toUsers: [User!]! @relation(name: "SendAlarm")
+  alarmType: Int
+  targetUser: User @relation(name: "AlarmsByUser")
+  targetPost: Post @relation(name: "AlarmsByPost")
+  text: String
+  noticeURL: String
+  createdAt: DateTime! @createdAt
+}
+
+
+type PopupSet {
+  id: ID! @id
+  user: User! @relation(name: "PopupSetByUser")
+  lifePop: Boolean @default(value: true)
+  filterPop: Boolean @default(value: true)
+  importantPop: Boolean @default(value: true)
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type Artist {
+  id: ID! @id
+  user: [User!]! @relation(name: "FavoritesArtist")
+  filters: [Filter!]! @relation(name: "ArtistByFilter")
+  registed: Boolean @default(value: false)
+  registedUser: [User!]! @relation(name: "RegistedArtistByUser")
+  name: String
+  engName: String
+  childArtist: [Artist!]! @relation(name: "ArtistByArtist")
+  parentsArtist: [Artist!]! @relation(name: "ArtistByArtist")
+  alternativeName: [String!]! @scalarList(strategy: RELATION)
+  jopType: String
+  activeType: String
+  createdAt: DateTime! @createdAt
+}
+
+
+type Creator {
+  id: ID! @id
+  user: User! @relation(name: "CreatorByUser")
+  rank: Int
+}
+
+type Advertisement {
+  id: ID! @id
+  files: String!
+  user: User @relation(name: "AdByUser")
+  post: Post @relation(name: "AdByPost")
+  link: String
+  connectType: String
+}

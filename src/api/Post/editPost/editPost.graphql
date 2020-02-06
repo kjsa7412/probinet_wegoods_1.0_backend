@@ -1,0 +1,14 @@
+type Mutation {
+  editPost(
+    id: String!
+    files: [String!]!
+    title: String!
+    price: Int
+    description: String
+    varifyDesc: String
+    deliveryPrice: Int
+    coord: String
+    address: String
+    action: ACTIONS!
+  ): Post!
+}

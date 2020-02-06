@@ -1,0 +1,22 @@
+enum ACTIONS {
+  PERSON
+  GROUP
+  MEMBER
+}
+
+input member {
+  name: String
+  engName: String
+  alternativeName: [String!]
+}
+
+type Mutation {
+  addArtist(
+    name: String
+    engName: String
+    alternativeName: [String!]
+    members: [member!]
+    jopType: String
+    action: ACTIONS!
+  ): [Artist!]
+}

@@ -1,0 +1,373 @@
+type User {
+  id: ID!
+  loginSecret: String
+  phoneNumber: String
+  email: String!
+  password: String!
+  username: String!
+  avatar: String
+  bio: String
+  following: [User!]!
+  followers: [User!]!
+  posts: [Post!]!
+  lifePosts: [LifePost!]!
+  inPosts: [Post!]!
+  rooms: [Room!]!
+  roomsOwner: [Room!]!
+  favorites: [Artist!]!
+  orders: [Order!]!
+  myFilter: [MyFilter!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  background: String
+  quizzes: [Quiz!]!
+  payment: Pay
+  alarms: [Alarm!]!
+  alarmsFromUser: [Alarm!]!
+  popupSet: PopupSet
+  miniPosts: [MiniPost!]!
+  varifyedPosts: [Post!]!
+  quizPassPosts: [Post!]!
+  reportedPosts: [Post!]!
+  reportedLifePosts: [LifePost!]!
+  reportedRooms: [Room!]!
+  receiveReports: [Report!]!
+  sendReports: [Report!]!
+  creator: Creator
+  valid: Boolean
+  registedArtist: [Artist!]!
+  createdAt: String
+  updatedAt: String
+  isFollowing: Boolean!
+  isSelf: Boolean!
+  followingCount: Int!
+  followersCount: Int!
+  alarmsCount: Int!
+  postsCount: Int!
+  myLocation: Location
+}
+
+type Post {
+  id: ID!
+  user: User!
+  comments: [Comment!]!
+  likes: [Like!]!
+  files: [String!]!
+  title: String!
+  postFilter: Filter
+  wantFilter: Filter
+  postQuiz: [Quiz!]!
+  price: Int
+  description: String
+  viewCount: Int
+  orderStatus: [Order!]!
+  registedMiniPosts: [MiniPost!]!
+  participants: [User!]!
+  varifyDesc: String
+  varifyedUser: [User!]!
+  quizPassUser: [User!]!
+  miniPostsForVarify: [MiniPost!]!
+  deliveryPrice: Int
+  reportedUser: [User!]!
+  reports: [Report!]!
+  alarms: [Alarm!]!
+  coord: String
+  address: String
+  status: Boolean
+  valid: Boolean
+  createdAt: String
+  updatedAt: String
+  isLiked: Boolean!
+  likeCount: Int!
+  commentCount: Int!
+  participantsCount: Int!
+  type: Int
+  numberOfParticipants: Int
+  tradeType: Int
+}
+
+type LifePost {
+  id: ID!
+  user: User!
+  comments: [Comment!]!
+  likes: [Like!]!
+  files: [String!]!
+  title: String!
+  description: String
+  viewCount: Int
+  reportedUser: [User!]!
+  reports: [Report!]!
+  valid: Boolean
+  createdAt: String
+  updatedAt: String
+  isLiked: Boolean!
+  likeCount: Int!
+  commentCount: Int!
+}
+
+type MiniPost {
+  id: ID!
+  user: User
+  registedPost: Post
+  varifiedPost: Post
+  title: String
+  description: String
+  files: [String!]!
+  reports: [Report!]!
+  valid: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type Order {
+  id: ID!
+  user: User!
+  name: String!
+  phoneNum: String
+  product: Post
+  productName: String!
+  price: Int!
+  payment: String!
+  location: String!
+  recipient: String!
+  recipientPhone: String!
+  requirement: String
+  commision: Int
+  deliveryPrice: Int
+  deliveryStatus: Int!
+  deliveryDesc: String
+  oneDate: String
+  twoDate: String
+  threeDate: String
+  fourDate: String
+  fiveDate: String
+  sixDate: String
+  sevenDate: String
+  createdAt: String
+  updatedAt: String
+}
+
+type Pay {
+  id: ID!
+  user: User!
+  account: String
+}
+
+type Room {
+  id: ID!
+  participants: [User!]!
+  messages: [Message!]!
+  title: String
+  subTitle: String
+  file: String
+  owner: User
+  notice: String
+  reportedUser: [User!]!
+  likes: [Like!]!
+  valid: Boolean
+  participantsCount: Int
+  createdAt: String
+  updatedAt: String
+}
+
+type Report {
+  id: ID!
+  reporter: User!
+  post: Post
+  lifePost: LifePost
+  miniPost: MiniPost
+  comment: Comment
+  userProfile: User
+  reportType: Int
+  createdAt: String
+  updatedAt: String
+}
+
+type Comment {
+  id: ID!
+  text: String!
+  user: User
+  post: Post
+  lifePost: LifePost
+  reports: [Report!]!
+  createdAt: String
+  updatedAt: String
+}
+
+type MyFilter {
+  id: ID!
+  title: String!
+  file: String
+  user: User!
+  filter: Filter!
+  alarmSet: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type Message {
+  id: ID!
+  text: String!
+  from: User!
+  room: Room!
+  createdAt: String
+  updatedAt: String
+}
+
+type Kind {
+  id: ID!
+  num: Int
+  text: String!
+  registed: Boolean
+  filters: [Filter!]!
+  createdAt: String
+}
+
+type Keyword {
+  id: ID!
+  num: Int
+  text: String
+  filters: [Filter!]!
+  count: Int
+  createdAt: String
+}
+
+type Filter {
+  id: ID!
+  artist: [Artist!]!
+  postType: [Int!]!
+  kind: [Kind!]!
+  keyword: [Keyword!]!
+  location: [Location!]!
+  postFilter: [Post!]!
+  wantFilter: [Post!]!
+  userFilter: [MyFilter!]!
+  popularFilter: Boolean
+  postFilterCount: Int
+  createdAt: String
+  userFilterCount: Int!
+  filterIndex: Int!
+}
+
+type Location {
+  id: ID!
+  num: Int!
+  text: String!
+  filters: [Filter!]!
+  users: [User!]!
+}
+
+type Like {
+  id: ID!
+  user: User
+  post: Post
+  lifePost: LifePost
+  room: Room
+  createdAt: String
+  updatedAt: String
+}
+
+type Quiz {
+  id: ID!
+  user: User!
+  posts: [Post!]!
+  title: String!
+  question: String!
+  answers: [String!]!
+  rightAnswer: Int
+  createdAt: String
+  updatedAt: String
+}
+
+type Alarm {
+  id: ID!
+  toUsers: [User!]!
+  alarmType: Int
+  targetUser: User
+  targetPost: Post
+  text: String
+  noticeURL: String
+  createdAt: String
+}
+
+type PopupSet {
+  id: ID!
+  user: User!
+  lifePop: Boolean
+  filterPop: Boolean
+  importantPop: Boolean
+  updatedAt: String
+}
+
+type Artist {
+  id: ID!
+  user: [User!]!
+  filters: [Filter!]!
+  registed: Boolean
+  registedUser: [User!]!
+  name: String
+  engName: String
+  childArtist: [Artist!]!
+  parentsArtist: [Artist!]!
+  alternativeName: [String!]!
+  jopType: String
+  activeType: String
+  registResult: String
+  registedUserCount: Int
+  postsCount: Int
+  filterIdOnOption: [String]
+  createdAt: String
+}
+
+type FilterItem {
+  id: String
+  text: String
+  count: Int
+}
+
+type Creator {
+  id: ID!
+  user: User!
+  rank: Int
+}
+
+type Advertisement {
+  id: ID!
+  files: String
+  user: User
+  post: Post
+  link: String
+  connectType: String
+}
+
+type BatchPayload {
+  count: Int
+}
+
+type PostTypeCount {
+  postType: Int
+  text: String
+  postsCount: Int
+}
+
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
+enum MiniPostType {
+  REGIST
+  VARIFY
+}
+
+enum WHEEL_ACTIONS {
+  UP
+  DOWN
+}
+
+enum POSTORDERBY {
+  LATEST
+  POPULAR
+  LOW_PRICE
+  HIGH_PRICE
+}

@@ -1,0 +1,3 @@
+type Query {
+  seeUserFromEmail(email: String!): User!
+}
